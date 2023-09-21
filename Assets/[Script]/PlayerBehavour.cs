@@ -10,24 +10,34 @@ public class PlayerBehavour : MonoBehaviour
     [SerializeField]
     private Boundry _boundry;
 
+    Camera _camera;
+
         // Start is called before the first frame update
     void Start()
     {
-        
+        _camera = Camera.main;
     }
 
     // Update is called once per frame
     void Update()
     {
-        float xAxis = Input.GetAxisRaw("Horizontal") * _speed * Time.deltaTime;
-        float yAxis = Input.GetAxisRaw("Vertical") * _speed * Time.deltaTime;
+        /*        float xAxis = Input.GetAxisRaw("Horizontal") * _speed * Time.deltaTime;
+                float yAxis = Input.GetAxisRaw("Vertical") * _speed * Time.deltaTime;*/
 
-        Debug.Log("This is my x axis input: " + xAxis);
-        Debug.Log("This is my y axis input: " + yAxis);
+        /*        Debug.Log("This is my x axis input: " + xAxis);
+                Debug.Log("This is my y axis input: " + yAxis);*/
 
-        transform.position = new Vector3(transform.position.x + xAxis, transform.position.y /*+ yAxis*/, 0); //new Vector3(xAxis, yAxis, 0);
+        //transform.position = new Vector3(transform.position.x + xAxis, transform.position.y /*+ yAxis*/, 0); //new Vector3(xAxis, yAxis, 0);
 
-        if(transform.position.x < _boundry.xPoint)
+        foreach (Touch touch in Input.touches)
+        {
+            Vector3 pos = _camera.ScreenToWorldPoint(touch.position);
+            transform.position = new Vector3( pos.x, pos.y, transform.position.z); 
+
+        }
+
+
+        if (transform.position.x < _boundry.xPoint)
         {
             transform.position = new Vector3(_boundry.xPoint, transform.position.y, transform.position.z);
         }
