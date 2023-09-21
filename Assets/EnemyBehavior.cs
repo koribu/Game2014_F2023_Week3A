@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyBehavior : MonoBehaviour
 {
-    float _speedForward;
+    float _speedVertical, _speedHorizontal;
 
     [SerializeField]
     Boundry _verticalBoundry;
@@ -15,18 +15,21 @@ public class EnemyBehavior : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _speedForward = Random.Range(3, 7);
+        _speedVertical =  Random.Range(1, 4);
+        _speedHorizontal = Random.Range(3, 7);
     }
 
     // Update is called once per frame
     void Update()
     {
-        transform.position = new Vector3 (transform.position.x, transform.position.y - _speedForward * Time.deltaTime,
-            transform.position.z);
+        transform.position = new Vector3 (Mathf.PingPong(Time.time * _speedHorizontal, _horizontalBoundry.yPoint - _horizontalBoundry.xPoint)  
+            + _horizontalBoundry.xPoint , transform.position.y - _speedVertical * Time.deltaTime, transform.position.z);
+
+
 
         if(_verticalBoundry.yPoint > transform.position.y)
         {
-            transform.position = new Vector3(Random.Range(_horizontalBoundry.xPoint,_horizontalBoundry.yPoint)    /*transform.position.x*/, _verticalBoundry.xPoint, transform.position.z);
+            transform.position = new Vector3(Random.Range(_horizontalBoundry.xPoint,_horizontalBoundry.yPoint), _verticalBoundry.xPoint, transform.position.z);
 
 
         }
