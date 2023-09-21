@@ -44,9 +44,13 @@ public class PlayerBehavour : MonoBehaviour
 
         foreach (Touch touch in Input.touches)
         {
-            _destination = _camera.ScreenToWorldPoint(touch.position);
-            _destination = new Vector3(_destination.x, _destination.y, 0);
+            Vector3 pos = _camera.ScreenToWorldPoint(touch.position);
+            pos = new Vector3(pos.x, pos.y, 0);
 
+            _destination = Vector2.Lerp(transform.position, pos, Time.deltaTime * _speed);
+
+            Debug.Log("Touch Input Pos= " + pos);
+            Debug.Log("Destination Pos = " + _destination);
         }
     }
 
