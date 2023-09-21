@@ -314,6 +314,7 @@ MonoBehaviour:
   _boundry:
     xPoint: -2
     yPoint: 2
+  _isUsingMobile: 1
 --- !u!212 &786666757
 SpriteRenderer:
   m_ObjectHideFlags: 0
